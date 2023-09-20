@@ -3,6 +3,7 @@ package com.mns.restapimns.mapper;
 import org.springframework.stereotype.Service;
 
 import com.mns.restapimns.entity.User;
+import com.mns.restapimns.enums.Gender;
 import com.mns.restapimns.structure.UserDTO;
 
 @Service
@@ -18,6 +19,7 @@ public class UserMapper implements IMapper<User, UserDTO> {
 		userDto.setName(entity.getName());
 		userDto.setFamilyName(entity.getFamilyName());
 		userDto.setEmail(entity.getEmail());
+		userDto.setGender(entity.getGender().name());
 
 		return userDto;
 	}
@@ -32,6 +34,7 @@ public class UserMapper implements IMapper<User, UserDTO> {
 		user.setName(dto.getName());
 		user.setFamilyName(dto.getFamilyName());
 		user.setEmail(dto.getEmail());
+		user.setGender(Gender.getOrNull(dto.getGender()));
 
 		return user;
 	}

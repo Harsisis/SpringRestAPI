@@ -1,9 +1,11 @@
 package com.mns.restapimns.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.mns.restapimns.entity.User;
 import com.mns.restapimns.mapper.UserMapper;
@@ -19,31 +21,38 @@ public class UserService {
 	@Autowired
 	private UserRepository repository;
 
-	public List<User> findAll() {
-		return repository.findAll();
+	public List<UserDTO> findAll() {
+		return repository.findAll().stream().map(user -> userMapper.toDto(user)).collect(Collectors.toList());
 	}
 
-	public User findById(int id) {
-		return repository.findById(id).get();
+	public UserDTO findById(int id) {
+		return userMapper.toDto(repository.findById(id).get());
 	}
 
-	public User create(UserDTO userDTO) {
-		return repository.save(userMapper.toEntity(userDTO));
+	public UserDTO create(UserDTO userDTO) {
+		return userMapper.toDto(repository.save(userMapper.toEntity(userDTO)));
 	}
 	
-	public User update(UserDTO userDTO) {
+	public UserDTO update(UserDTO userDTO) {
 		if(this.findById(userDTO.getId()) == null) {
 			return null;
 		}
-		return repository.save(userMapper.toEntity(userDTO));
+		return userMapper.toDto(repository.save(userMapper.toEntity(userDTO)));
 	}
 
 	public void delete(int id) {
-		User userToDelete = this.findById(id);
+		User userToDelete = repository.findById(id).get();
 		if(userToDelete == null) {
 			return;
 		}
 		repository.delete(userToDelete);
+	}
+
+	public ModelAndView getUsersView() {
+		ModelAndView mv=new ModelAndView("view/users");
+		mv.addObject("users", this.findAll());
+		
+		return mv;
 	}
 
 }

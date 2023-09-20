@@ -5,6 +5,7 @@ public class UserDTO {
 	private String name;
 	private String familyName;
 	private String email;
+	private String gender;
 	
 	
 	public int getId() {
@@ -30,5 +31,11 @@ public class UserDTO {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	public String getGender() {
+		return gender;
+	}
+	public void setGender(String gender) {
+		this.gender = gender;
 	}
 }

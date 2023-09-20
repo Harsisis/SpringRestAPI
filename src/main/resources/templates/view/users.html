@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Users list</title>
+</head>
+
+<style>
+	.user-bloc{
+		margin: 10px;
+		padding: 10px;
+		border: 1px solid darkgreen;
+		border-radius: 5px;
+	}
+</style>
+
+<body>
+	<div>Liste des utilisateurs de l'application</div>
+
+	<div>
+		<div class="user-bloc" th:each="user : ${users}">
+			<div th:text="${ user.name + ' ' + user.familyName }"></div>
+			<div th:text="${ user.email }"></div>
+		</div>
+	</div>
+</body>
+
+</html>

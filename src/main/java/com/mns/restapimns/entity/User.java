@@ -1,7 +1,14 @@
 package com.mns.restapimns.entity;
 
+
+import java.util.Date;
+
+import com.mns.restapimns.enums.Gender;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
@@ -20,6 +27,13 @@ public class User {
 	
 	@Column(name="email")
 	private String email;
+	
+	@Enumerated(EnumType.ORDINAL)
+	@Column(name="gender")
+	private Gender gender;
+	
+	@Column(name="birthdate")
+	private Date birthdate;
 
 	public int getId() {
 		return id;
@@ -52,4 +66,13 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+	public Gender getGender() {
+		return gender;
+	}
+
+	public void setGender(Gender gender) {
+		this.gender = gender;
+	}
+	
 }

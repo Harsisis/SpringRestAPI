@@ -9,41 +9,48 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
-import com.mns.restapimns.entity.User;
 import com.mns.restapimns.service.UserService;
 import com.mns.restapimns.structure.UserDTO;
 
 @RestController
+@RequestMapping("/user")
 public class UserController {
 
 	@Autowired
 	private UserService service;
 
 
-	@GetMapping("/user/findAll")
-	public @ResponseBody List<User> findAll() {
+	@GetMapping("/findAll")
+	public @ResponseBody List<UserDTO> findAll() {
 		return service.findAll();
 	}
 	
-	@GetMapping("/user/find")
-	public @ResponseBody User findById(@RequestHeader(name="id") int id) {
+	@GetMapping("/")
+	public ModelAndView getUsersView() {
+		return service.getUsersView();
+	}
+	
+	@GetMapping("/find")
+	public @ResponseBody UserDTO findById(@RequestHeader(name="id") int id) {
 		return service.findById(id);
 	}
 	
-	@PostMapping("/user/create")
-	public @ResponseBody User create(@RequestBody UserDTO userDTO) {
+	@PostMapping("/create")
+	public @ResponseBody UserDTO create(@RequestBody UserDTO userDTO) {
 		return service.create(userDTO);
 	}
 	
-	@PutMapping("/user/update")
-	public @ResponseBody User update(@RequestBody UserDTO userDTO) {
+	@PutMapping("/update")
+	public @ResponseBody UserDTO update(@RequestBody UserDTO userDTO) {
 		return service.update(userDTO);
 	}
 	
-	@DeleteMapping("/user/delete")
+	@DeleteMapping("/delete")
 	public @ResponseBody Boolean delete(@RequestHeader(name="id") int id) {
 		service.delete(id);
 		return true;
